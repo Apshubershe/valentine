@@ -14,7 +14,7 @@ const heartsContainer = document.getElementById("hearts-container");
 
 // Состояние кнопки "Нет"
 let noClickCount = 0;
-const noTexts = ["Нет","Ты уверена?","Точно нет?","Ну пожалуйста…"];
+const noTexts = ["Нет","Ты уверена?","Точно нет?","Ну пожалуйста…","ну котик(((","Евенок мой(((","((((((((((("];
 
 // Убегание кнопки "Нет" по экрану
 function runAway(btn) {
