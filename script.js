@@ -1,109 +1,102 @@
-document.addEventListener('DOMContentLoaded', function() {
+\document.addEventListener('DOMContentLoaded', function() {
   // Элементы
-  const screens = {
-    envelope: document.getElementById('envelopeScreen'),
-    step1: document.getElementById('step1'),
-    step2: document.getElementById('step2'),
-    step3: document.getElementById('step3')
-  };
-
+  const envelopeScreen = document.getElementById('envelopeScreen');
+  const step1 = document.getElementById('step1');
+  const step2 = document.getElementById('step2');
+  const step3 = document.getElementById('step3');
+  
   const slider = document.getElementById('envelopeSlider');
   const flap = document.getElementById('envelopeFlap');
   const text = document.getElementById('envelopeText');
   const hint = document.getElementById('sliderHint');
-
+  
   const yesBtn1 = document.getElementById('yesBtn1');
   const noBtn1 = document.getElementById('noBtn1');
   const yesBtn2 = document.getElementById('yesBtn2');
   const noBtn2 = document.getElementById('noBtn2');
-
+  
   const yepSound = document.getElementById('yepSound');
   const happySound = document.getElementById('happySound');
 
-  let noClicks1 = 0;
-  let noClicks2 = 0;
+  let noCount1 = 0;
+  let noCount2 = 0;
+  const phrases = ['Точно нет? 😈', 'Ну пожалуйста 🥺', 'Последний шанс! 💔', '😿😿😿'];
 
-  const noPhrases = ['Точно нет? 😈', 'Ну пожалуйста 🥺', 'Последний шанс! 💔', '😿😿😿'];
-
-  // 1. Конверт
+  // ✅ ПОЛЗУНОК РАБОТАЕТ
   slider.addEventListener('input', function() {
-    const value = parseInt(this.value);
+    const value = this.value;
     
-    // Ползунок
+    console.log('Ползунок:', value); // ✅ ОТЛАДКА
+    
+    // Меняем цвет ползунка
     this.style.background = `linear-gradient(to right, #ff6f91 ${value}%, #e9ecef ${value}%)`;
     
-    // Крышка конверта
-    flap.style.transform = `translateY(${-value * 2.1}px) rotateX(${value * 0.3}deg)`;
+    // Двигаем крышку конверта
+    flap.style.transform = `translateY(${-value * 2}px) rotateX(${value * 0.4}deg)`;
     
+    // Текст тускнеет
     if (value > 70) {
       text.style.opacity = '0.3';
       hint.textContent = 'Открывается... ✨';
     }
     
-    if (value === 100) {
+    // ✅ ПЕРЕХОД НА СЛЕДУЮЩИЙ ЭКРАН
+    if (value == 100) {
       setTimeout(() => {
-        screens.envelope.classList.remove('active');
-        screens.step1.classList.add('active');
-      }, 600);
+        envelopeScreen.classList.remove('active');
+        envelopeScreen.style.display = 'none';
+        step1.classList.add('active');
+      }, 500);
     }
   });
 
-  // 2. Первый экран - ДА
+  // Да - первый экран
   yesBtn1.onclick = function() {
     playSound(yepSound);
-    screens.step1.classList.remove('active');
-    setTimeout(() => screens.step2.classList.add('active'), 400);
+    step1.classList.remove('active');
+    setTimeout(() => step2.classList.add('active'), 300);
   };
 
-  // 2. Первый экран - НЕТ
-  noBtn1.onclick = handleNoClick(screens.step1, () => noClicks1++, noPhrases);
+  // Нет - первый экран
+  noBtn1.onclick = function() {
+    flyNoButton(this, noCount1++, phrases, step1);
+  };
 
-  // 3. Второй экран - ДА
+  // Да - второй экран
   yesBtn2.onclick = function() {
     playSound(happySound);
-    screens.step2.classList.remove('active');
-    setTimeout(() => screens.step3.classList.add('active'), 400);
+    step2.classList.remove('active');
+    setTimeout(() => step3.classList.add('active'), 300);
   };
 
-  // 3. Второй экран - НЕТ
-  noBtn2.onclick = handleNoClick(screens.step2, () => noClicks2++, noPhrases);
+  // Нет - второй экран
+  noBtn2.onclick = function() {
+    flyNoButton(this, noCount2++, phrases, step2);
+  };
 
-  // Функции
   function playSound(sound) {
     sound.currentTime = 0;
     sound.play().catch(() => {});
   }
 
-  function handleNoClick(screen, counter, phrases) {
-    return function(e) {
-      e.preventDefault();
-      
-      // Улетает кнопка НЕТ
-      this.style.position = 'fixed';
-      this.style.zIndex = '1000';
-      this.style.transition = 'all 0.8s ease';
-      this.style.transform = `translate(${Math.random()*500-250}px, ${Math.random()*500-250}px) rotate(720deg) scale(0.5)`;
-      this.innerHTML = phrases[counter()] || '😿';
-      
-      setTimeout(() => {
-        createNewNoButton(screen, counter, phrases);
-      }, 400);
-    };
+  function flyNoButton(button, count, phrases, screen) {
+    button.style.position = 'fixed';
+    button.style.zIndex = '9999';
+    button.style.transition = 'all 0.8s ease';
+    button.style.transform = `translate(${Math.random()*400-200}px, ${Math.random()*400-200}px) rotate(720deg) scale(0.3)`;
+    button.textContent = phrases[count] || '😿';
+    
+    setTimeout(() => {
+      createNewNoButton(screen, count + 1, phrases);
+    }, 400);
   }
 
-  function createNewNoButton(screen, counter, phrases) {
+  function createNewNoButton(screen, count, phrases) {
     const buttons = screen.querySelector('.buttons');
     const newBtn = document.createElement('button');
-    
     newBtn.className = 'btn-no';
-    newBtn.textContent = phrases[counter()] || 'Нет 😈';
-    
-    newBtn.onclick = handleNoClick(screen, counter, phrases);
-    
-    buttons.querySelector('.btn-no').remove();
+    newBtn.textContent = phrases[count % phrases.length] || 'Нет 😈';
+    newBtn.onclick = () => flyNoButton(newBtn, count, phrases, screen);
     buttons.appendChild(newBtn);
   }
-
-  // Мобильная оптимизация
-  document.addEventListener('touchstart', function() {}, { passive: false });
 });
