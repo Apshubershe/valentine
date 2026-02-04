@@ -4,6 +4,10 @@
   padding: 0; 
 }
 
+:root {
+  --progress: 0%;
+}
+
 body {
   font-family: 'Nunito', sans-serif;
   background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
@@ -59,7 +63,7 @@ body {
   text-align: center;
   font-weight: 700;
   font-size: 1.45rem;
-  color: #2c2c2c;  /* ✅ ЧЁРНЫЙ */
+  color: #2c2c2c;
   z-index: 10;
   transition: all 0.4s ease;
   text-shadow: 0 1px 3px rgba(0,0,0,0.2);
@@ -122,6 +126,16 @@ body {
   display: none !important; 
 }
 
+.card.active {
+  display: block !important;
+  animation: slideIn 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 .cat, .video {
   display: block;
   margin: 0 auto 25px;
@@ -138,21 +152,14 @@ h1 {
   font-weight: 700; 
   margin-bottom: 20px; 
   font-size: 2.1rem;
-  /* ✅ ИСПРАВЛЕНО: градиент только для текста, эмодзи остаются видимыми */
   background: linear-gradient(135deg, #ff6f91, #ff8ba7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  /* ✅ ДОБАВЛЕНО: принудительно делаем эмодзи черными */
   color: #2c2c2c;
-  /* ✅ ДОБАВЛЕНО: сбрасываем заливку для эмодзи */
-  -webkit-text-fill-color: inherit;
 }
 
-/* ✅ НОВОЕ: специальный стиль для эмодзи в h1 */
-h1::before,
-h1::after,
-h1 > * {
+h1 * {
   -webkit-background-clip: initial !important;
   background-clip: initial !important;
   -webkit-text-fill-color: #2c2c2c !important;
@@ -208,15 +215,15 @@ button.no:hover {
   font-size: 1.3rem;
   color: #ff6f91;
   margin-top: 20px;
+  font-weight: 600;
 }
 
-/* Кнопка "Нет" улетает навсегда */
+/* Анимация улетающей кнопки */
 .no-button-flying {
   pointer-events: auto !important;
   box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
 }
 
-/* Анимация появления новых кнопок Нет */
 .buttons .no::after {
   content: '';
   position: absolute;
@@ -240,4 +247,5 @@ button.no:hover {
   #envelope { width: 300px; height: 180px; }
   .card { padding: 30px 25px; margin: 10px; }
   h1 { font-size: 1.8rem; }
+  button { padding: 14px 28px; font-size: 16px; }
 }
