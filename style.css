@@ -138,25 +138,10 @@ h1 {
   font-weight: 700; 
   margin-bottom: 20px; 
   font-size: 2.1rem;
-  /* ✅ ИСПРАВЛЕНО: градиент только для текста, эмодзи остаются видимыми */
   background: linear-gradient(135deg, #ff6f91, #ff8ba7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  /* ✅ ДОБАВЛЕНО: принудительно делаем эмодзи черными */
-  color: #2c2c2c;
-  /* ✅ ДОБАВЛЕНО: сбрасываем заливку для эмодзи */
-  -webkit-text-fill-color: inherit;
-}
-
-/* ✅ НОВОЕ: специальный стиль для эмодзи в h1 */
-h1::before,
-h1::after,
-h1 > * {
-  -webkit-background-clip: initial !important;
-  background-clip: initial !important;
-  -webkit-text-fill-color: #2c2c2c !important;
-  color: #2c2c2c !important;
 }
 
 .buttons {
@@ -241,3 +226,5 @@ button.no:hover {
   .card { padding: 30px 25px; margin: 10px; }
   h1 { font-size: 1.8rem; }
 }
+тут цвет текста розовый из за чего эмодзи тоже стали розовые и не видно что на них 
+исправь
