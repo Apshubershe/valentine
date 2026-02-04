@@ -1,19 +1,19 @@
-/* Основные стили и шрифт */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
 
 * {
   box-sizing: border-box;
-  margin: 0; padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  font-family: 'Nunito', system-ui, sans-serif;
+  font-family: 'Nunito', sans-serif;
   background: linear-gradient(135deg, #ff9a9e, #fecfef);
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 15px;
+  padding: 20px;
   overflow: hidden;
 }
 
@@ -70,7 +70,7 @@ button {
   font-size: 18px;
   font-weight: 600;
   box-shadow: 0 6px 14px rgba(0,0,0,0.18);
-  transition: background 0.3s ease, transform 0.25s ease;
+  transition: background 0.3s ease;
   user-select: none;
   position: relative;
   background: #ff6f91;
@@ -95,7 +95,6 @@ button#yesBtn, button#yes2 {
   top: 0;
 }
 
-/* Видео на втором экране */
 .video {
   width: 100%;
   border-radius: 16px;
@@ -103,7 +102,6 @@ button#yesBtn, button#yes2 {
   box-shadow: 0 8px 25px rgba(255, 111, 145, 0.5);
 }
 
-/* Финальный текст */
 .final-text {
   font-size: 1.3rem;
   font-weight: 600;
@@ -111,7 +109,6 @@ button#yesBtn, button#yes2 {
   line-height: 1.5;
 }
 
-/* Салют сердечек */
 #hearts-container {
   position: fixed;
   top: 10px;
@@ -121,7 +118,6 @@ button#yesBtn, button#yes2 {
   z-index: 9999;
 }
 
-/* Анимация сердечек */
 @keyframes floatUp {
   0% {
     opacity: 1;
