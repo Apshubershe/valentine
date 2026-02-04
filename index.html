@@ -9,49 +9,53 @@
 </head>
 <body>
   <!-- Звуки -->
-  <audio id="yepSound" preload="auto" src="yepiii.mp3"></audio>
-  <audio id="happySound" preload="auto" src="happycat.mp3"></audio>
+  <audio id="clickSound" preload="auto">
+    <source src="https://www.soundjay.com/misc/sounds/bell-notification-01a.wav" type="audio/wav">
+  </audio>
+  <audio id="happySound" preload="auto">
+    <source src="https://www.soundjay.com/misc/sounds/applause-1.wav" type="audio/wav">
+  </audio>
 
-  <!-- 1. КОНВЕРТ (показывается сразу) -->
-  <div id="envelopeScreen" class="screen active">
-    <div id="envelope">
-      <div id="envelopeFlap"></div>
-      <div id="envelopeText">Письмо Еве 💌</div>
+  <!-- 1. Конверт -->
+  <div id="screen1" class="screen active">
+    <div class="envelope">
+      <div class="flap" id="flap"></div>
+      <div class="envelope-text" id="envelopeText">Письмо Еве 💌</div>
     </div>
-    <input type="range" min="0" max="100" value="0" id="envelopeSlider">
-    <div id="sliderHint">Потяни ползунок, чтобы открыть 💕</div>
+    <input type="range" min="0" max="100" value="0" id="slider">
+    <div class="slider-hint" id="sliderHint">Потяни, чтобы открыть</div>
   </div>
 
-  <!-- 2. ПЕРВЫЙ ВОПРОС -->
-  <div id="step1" class="screen hidden">
+  <!-- 2. Первый вопрос -->
+  <div id="screen2" class="screen">
     <div class="card">
-      <img src="cat.png" alt="Котик" class="cat-img">
-      <h1>Ева, будешь моей валентинкой? 💕</h1>
+      <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=400" alt="Котик" class="cat-image">
+      <h1>Ева, будешь моей валентинкой? <span class="emoji">💕</span></h1>
       <div class="buttons">
-        <button id="yesBtn1" class="btn-yes">Да! 💖</button>
-        <button id="noBtn1" class="btn-no">Нет 😈</button>
+        <button class="yes" id="yes1">Да! <span class="emoji">💖</span></button>
+        <button class="no" id="no1">Нет <span class="emoji">😈</span></button>
       </div>
     </div>
   </div>
 
-  <!-- 3. ВТОРОЙ ВОПРОС -->
-  <div id="step2" class="screen hidden">
+  <!-- 3. Второй вопрос -->
+  <div id="screen3" class="screen">
     <div class="card">
-      <video src="happycat.mp4" autoplay loop muted class="cat-video" playsinline></video>
-      <h1>Урааа! Ты моя 💕</h1>
-      <p class="question-text">Проведём 14 февраля вместе? 😏</p>
+      <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=400" alt="Сердечко" class="cat-image">
+      <h1>Урааа! Ты моя! <span class="emoji">💕</span></h1>
+      <p class="text">Проведём 14 февраля вместе?</p>
       <div class="buttons">
-        <button id="yesBtn2" class="btn-yes">Да! 💖</button>
-        <button id="noBtn2" class="btn-no">Нет 😈</button>
+        <button class="yes" id="yes2">Да! <span class="emoji">💖</span></button>
+        <button class="no" id="no2">Нет <span class="emoji">😈</span></button>
       </div>
     </div>
   </div>
 
-  <!-- 4. ФИНАЛ -->
-  <div id="step3" class="screen hidden">
-    <div class="card final">
-      <h1>💖💖💖 УРААА! 🎉</h1>
-      <p class="final-text">Жди моего сообщения с планом на 14 февраля ✨</p>
+  <!-- 4. Финал -->
+  <div id="screen4" class="screen">
+    <div class="card">
+      <h1><span class="emoji">💖💖💖</span> УРААА!</h1>
+      <p class="text">Жди моего сообщения с планом на 14 февраля <span class="emoji">✨</span></p>
     </div>
   </div>
 
