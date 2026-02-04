@@ -89,10 +89,10 @@ body {
 
 .hidden { display: none; }
 
-.cat {
-  width: 120px;
-  margin: 0 auto 15px;
+.cat, .video {
   display: block;
+  margin: 0 auto 15px;
+  max-width: 100%;
   border-radius: 16px;
   box-shadow: 0 6px 16px rgba(0,0,0,0.2);
 }
@@ -111,26 +111,4 @@ button {
   padding: 12px 28px;
   border-radius: 999px;
   border: none;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: 600;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.18);
-  position: relative;
-  background: #ff6f91;
-  color: white;
-  flex-shrink: 0;
-}
-
-button#noBtn, button#no2 {
-  background: #f1f1f1;
-  color: #333;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-button#yesBtn, button#yes2 {
-  position: relative;
-  left: 0;
-  top: 0;
-}
+  cursor: po
