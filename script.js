@@ -9,20 +9,19 @@ const noTexts = ["Нет 😈", "Ты уверена?", "Точно нет?", "�
 let noCounter = 0;
 const minScale = 0.5;
 
-// Отслеживаем движение ползунка
+// Слушаем ползунок
 slider.addEventListener("input", () => {
-  if (Number(slider.value) >= 90) { // конверт открыт
+  if (Number(slider.value) >= 100) { // когда дошли до конца
     envelope.style.display = "none";
     step1.classList.remove("hidden");
   }
 });
 
-// Функция для случайного положения кнопки "Нет"
+// Кнопка "Нет"
 function placeNoButtonRandom() {
   const btn = noBtn;
   const btnWidth = btn.offsetWidth;
   const btnHeight = btn.offsetHeight;
-
   const windowWidth = window.innerWidth;
   const windowHeight = window.innerHeight;
   const padding = 10;
@@ -44,7 +43,6 @@ function placeNoButtonRandom() {
   btn.style.transform = `scale(${scale})`;
 }
 
-// Кнопка "Нет"
 noBtn.addEventListener("click", (e) => {
   e.preventDefault();
   placeNoButtonRandom();
