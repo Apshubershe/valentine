@@ -14,11 +14,12 @@ body {
   overflow: hidden;
 }
 
+/* Карточка */
 .card {
   background: white;
   padding: 26px;
   border-radius: 18px;
-  width: 330px;
+  width: 340px;
   text-align: center;
   box-shadow: 0 10px 30px rgba(0,0,0,.15);
   position: relative;
@@ -48,29 +49,35 @@ p {
   margin-bottom: 18px;
 }
 
+/* Кнопки */
 .buttons {
   display: flex;
   justify-content: space-between;
+  align-items: center; /* одинаковая высота Y */
+  margin-top: 20px;
+  position: relative;
 }
 
 button {
   padding: 10px 18px;
   border-radius: 999px;
   border: none;
-  cursor: pointer;
   font-size: 15px;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
-button:first-child {
+#yes1, #yes2 {
   background: #ff6f91;
   color: white;
 }
 
-button:last-child {
+#no1, #no2 {
   background: #eee;
-  position: fixed;
+  position: relative;
 }
 
+/* Финальный текст */
 .final-text {
   font-size: 18px;
   animation: pop 0.6s ease;
@@ -81,3 +88,12 @@ button:last-child {
   to { transform: scale(1); opacity: 1; }
 }
 
+/* сердечки фоном */
+body::after {
+  content: "💖 💕 💘 💝";
+  position: fixed;
+  inset: 0;
+  font-size: 40px;
+  opacity: .15;
+  pointer-events: none;
+}
