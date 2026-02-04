@@ -59,10 +59,10 @@ body {
   text-align: center;
   font-weight: 700;
   font-size: 1.45rem;
-  color: #333;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  color: #2c2c2c;  /* ✅ ЧЁРНЫЙ */
   z-index: 10;
   transition: all 0.4s ease;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
 /* Ползунок */
@@ -193,6 +193,31 @@ button.no:hover {
   font-size: 1.3rem;
   color: #ff6f91;
   margin-top: 20px;
+}
+
+/* Кнопка "Нет" улетает навсегда */
+.no-button-flying {
+  pointer-events: auto !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+}
+
+/* Анимация появления новых кнопок Нет */
+.buttons .no::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: linear-gradient(45deg, transparent, rgba(255,111,145,0.1), transparent);
+  border-radius: 50px;
+  animation: pulse-glow 2s infinite;
+  z-index: -1;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
 }
 
 /* Адаптивность */
