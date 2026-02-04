@@ -1,71 +1,103 @@
-// Конверт
-const envelopeSlider = document.getElementById("envelopeSlider");
-const envelopeFlap = document.querySelector(".envelope-flap");
-const envelopeContainer = document.getElementById("envelopeContainer");
-const step1 = document.getElementById("step1");
-
-envelopeSlider.addEventListener("input", () => {
-  const value = envelopeSlider.value;
-  envelopeFlap.style.transform = `rotateX(${-90 * (value/100)}deg)`;
-  if(value >= 100){
-    envelopeContainer.style.display = "none";
-    step1.classList.remove("hidden");
-  }
-});
-
-// Первый экран кнопки
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
+const step1 = document.getElementById("step1");
+
 const step2 = document.getElementById("step2");
+const yes2 = document.getElementById("yes2");
+const no2 = document.getElementById("no2");
+
 const step3 = document.getElementById("step3");
+
 const yaySound = document.getElementById("sound");
 const happyKit = document.getElementById("happyKit");
 
-// Тексты для кнопки "Нет"
+const heartsContainer = document.getElementById("hearts-container");
+
 const noTexts = ["Нет 😈", "Ты уверена?", "Точно нет?", "Ну пожалуйста…"];
 let noCounter = 0;
+const minScale = 0.7;
 
-function placeNoButtonRandom(btn){
-  const rect = btn.parentElement.getBoundingClientRect();
+// Функция для случайного расположения кнопки "Нет" внутри родительского блока
+function placeNoButtonRandom(btn) {
+  const container = btn.parentElement;
+  const containerRect = container.getBoundingClientRect();
   const btnRect = btn.getBoundingClientRect();
-  const padding = 5;
-  const maxX = rect.width - btnRect.width - padding;
-  const maxY = rect.height - btnRect.height - padding;
-  const x = Math.random() * maxX + padding/2;
-  const y = Math.random() * maxY + padding/2;
+  const padding = 8;
+
+  const maxX = containerRect.width - btnRect.width - padding;
+  const maxY = containerRect.height - btnRect.height - padding;
+
+  const x = Math.random() * maxX + padding / 2;
+  const y = Math.random() * maxY + padding / 2;
+
+  btn.style.position = "absolute";
   btn.style.left = x + "px";
   btn.style.top = y + "px";
-  if(noCounter < noTexts.length){
+
+  if (noCounter < noTexts.length) {
     btn.textContent = noTexts[noCounter];
     noCounter++;
   }
-  yesBtn.style.transform = `scale(${1 + noCounter*0.05})`;
+
+  // Уменьшаем размер кнопки "Нет" и одновременно увеличиваем кнопку "Да"
+  let scaleNo = 1 - noCounter * 0.1;
+  if (scaleNo < minScale) scaleNo = minScale;
+
+  let scaleYes = 1 - (scaleNo - minScale); // Инвертируем, чтобы "Да" росла при уменьшении "Нет"
+
+  btn.style.transform = `scale(${scaleNo})`;
+  yesBtn.style.transform = `scale(${scaleYes})`;
 }
 
-noBtn.addEventListener("click", e=>{
+// Обработчик для первой кнопки "Нет"
+noBtn.addEventListener("click", e => {
   e.preventDefault();
   placeNoButtonRandom(noBtn);
 });
 
-yesBtn.addEventListener("click", ()=>{
+// При нажатии "Да" на первом экране
+yesBtn.addEventListener("click", () => {
   yaySound.currentTime = 0;
-  yaySound.play().catch(()=>{});
+  yaySound.play().catch(() => {});
   step1.classList.add("hidden");
   step2.classList.remove("hidden");
 });
 
-// Второй экран кнопки
-const yes2 = document.getElementById("yes2");
-const no2 = document.getElementById("no2");
-
-no2.addEventListener("click", e=>{
+// Обработчик для второй кнопки "Нет"
+no2.addEventListener("click", e => {
   e.preventDefault();
   placeNoButtonRandom(no2);
 });
 
-yes2.addEventListener("click", ()=>{
+// При нажатии "Да" на втором экране
+yes2.addEventListener("click", () => {
   happyKit.currentTime = 0;
-  happyKit.play().catch(()=>{});
+  happyKit.play().catch(() => {});
   step2.classList.add("hidden");
   step3.classList.remove("hidden");
+  launchHearts();
 });
+
+// Функция создания и запуска анимации сердечек
+function launchHearts() {
+  for (let i = 0; i < 15; i++) {
+    const heart = document.createElement("div");
+    heart.textContent = "💖";
+    heart.style.position = "absolute";
+    heart.style.fontSize = `${12 + Math.random() * 20}px`;
+    heart.style.left = `${50 + Math.random() * 100}px`;
+    heart.style.top = `60px`;
+    heart.style.opacity = 1;
+    heart.style.pointerEvents = "none";
+    heart.style.userSelect = "none";
+    heart.style.animation = `floatUp 2s ease forwards`;
+    heart.style.animationDelay = `${i * 0.1}s`;
+
+    heartsContainer.appendChild(heart);
+
+    // Удаляем сердечко через 2 секунды
+    setTimeout(() => {
+      heartsContainer.removeChild(heart);
+    }, 2000);
+  }
+}
