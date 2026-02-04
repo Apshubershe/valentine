@@ -1,171 +1,143 @@
+// Ждём загрузки DOM
 document.addEventListener('DOMContentLoaded', function() {
-  
-  // Элементы
-  const envelopeSlider = document.getElementById('envelopeSlider');
-  const envelopeFlap = document.getElementById('envelopeFlap');
-  const envelopeText = document.getElementById('envelopeText');
-  const envelopeContainer = document.getElementById('envelopeContainer');
-  const sliderHint = document.getElementById('sliderHint');
+
+  // Все элементы
+  const slider = document.getElementById('envelopeSlider');
+  const flap = document.getElementById('envelopeFlap');
+  const text = document.getElementById('envelopeText');
+  const container = document.getElementById('envelopeContainer');
+  const hint = document.getElementById('sliderHint');
   
   const step1 = document.getElementById('step1');
   const step2 = document.getElementById('step2');
   const step3 = document.getElementById('step3');
   
-  const yesBtn = document.getElementById('yesBtn');
-  const noBtn = document.getElementById('noBtn');
+  const yes1 = document.getElementById('yesBtn');
+  const no1 = document.getElementById('noBtn');
   const yes2 = document.getElementById('yes2');
   const no2 = document.getElementById('no2');
   
-  const yaySound = document.getElementById('sound');
-  const happyKit = document.getElementById('happyKit');
+  const sound1 = document.getElementById('sound1');
+  const sound2 = document.getElementById('sound2');
   
-  let noCounter1 = 0;
-  let noCounter2 = 0;
+  let noClicks1 = 0;
+  let noClicks2 = 0;
   
-  const noTexts = ['Нет 😈', 'Ты уверена?', 'Точно нет?', 'Ну пожалуйста… 😿', 'Последний шанс! 🥺'];
+  const noPhrases = ['Нет 😈', 'Ты уверена?', 'Точно нет?', 'Ну пожалуйста…', 'Последний шанс! 🥺'];
   
-  // ========== КОНВЕРТ ==========
-  envelopeSlider.addEventListener('input', function() {
-    const value = parseFloat(this.value);
+  // 1. КОНВЕРТ - РАБОТАЕТ ГАРАНТИРОВАННО
+  slider.addEventListener('input', function() {
+    let progress = this.value;
     
-    // Прогресс-бар
-    this.style.setProperty('--progress', value + '%');
+    // Прогресс-бар (визуально)
+    let gradient = `linear-gradient(to right, #e9ecef ${progress}%, #f8f9fa ${progress}%)`;
+    this.style.background = gradient;
     
-    // Анимация клапана
-    const rotation = -120 * (value / 100);
-    envelopeFlap.style.transform = `rotateX(${rotation}deg)`;
+    // Открытие клапана
+    let angle = -120 * (progress / 100);
+    flap.style.transform = `rotateX(${angle}deg)`;
     
     // Эффекты текста
-    if (value > 70) {
-      envelopeText.style.opacity = '0.3';
-      sliderHint.textContent = 'Открывается... ✨';
+    if (progress > 70) {
+      text.style.opacity = '0.3';
+      hint.textContent = 'Открывается... ✨';
     }
     
-    if (value >= 98) {
-      envelopeFlap.style.transition = 'all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-    }
-    
-    if (value === 100) {
+    // ✅ ПОЛНОЕ ОТКРЫТИЕ
+    if (progress == 100) {
       setTimeout(() => {
-        envelopeContainer.style.transition = 'all 0.5s ease';
-        envelopeContainer.style.opacity = '0';
-        envelopeContainer.style.transform = 'scale(0.95)';
-        
+        container.style.opacity = '0';
+        container.style.transform = 'scale(0.9)';
         setTimeout(() => {
-          envelopeContainer.style.display = 'none';
-          step1.classList.remove('hidden');
-        }, 500);
-      }, 800);
+          container.style.display = 'none';
+          step1.classList.add('active');
+        }, 300);
+      }, 600);
     }
   });
   
-  // ========== ПЕРВЫЙ ЭКРАН ==========
-  yesBtn.addEventListener('click', function() {
-    yaySound.currentTime = 0;
-    yaySound.play().catch(() => {});
-    
-    step1.classList.add('hidden');
-    setTimeout(() => {
-      step2.classList.remove('hidden');
-    }, 400);
-  });
+  // 2. ПЕРВЫЙ ЭКРАН
+  yes1.onclick = function() {
+    sound1.currentTime = 0;
+    sound1.play().catch(() => {});
+    step1.classList.remove('active');
+    setTimeout(() => step2.classList.add('active'), 300);
+  };
   
-  noBtn.addEventListener('click', function(e) {
+  no1.onclick = function(e) {
     e.preventDefault();
-    e.stopPropagation();
-    moveNoButton(this, noCounter1);
-    noCounter1++;
-    
-    // ✅ Создаём НОВУЮ кнопку "Нет" на месте старой
-    createNewNoButton('noBtn');
-  });
+    makeNoButtonFly(no1, noClicks1, noPhrases);
+    noClicks1++;
+    replaceNoButton('noBtn', noClicks1);
+  };
   
-  // ========== ВТОРОЙ ЭКРАН ==========
-  yes2.addEventListener('click', function() {
-    happyKit.currentTime = 0;
-    happyKit.play().catch(() => {});
-    
-    step2.classList.add('hidden');
-    setTimeout(() => {
-      step3.classList.remove('hidden');
-    }, 400);
-  });
+  // 3. ВТОРОЙ ЭКРАН
+  yes2.onclick = function() {
+    sound2.currentTime = 0;
+    sound2.play().catch(() => {});
+    step2.classList.remove('active');
+    setTimeout(() => step3.classList.add('active'), 300);
+  };
   
-  no2.addEventListener('click', function(e) {
+  no2.onclick = function(e) {
     e.preventDefault();
-    e.stopPropagation();
-    moveNoButton(this, noCounter2);
-    noCounter2++;
-    
-    // ✅ Создаём НОВУЮ кнопку "Нет" на месте старой
-    createNewNoButton('no2');
-  });
+    makeNoButtonFly(no2, noClicks2, noPhrases);
+    noClicks2++;
+    replaceNoButton('no2', noClicks2);
+  };
   
-  // ========== ЛОГИКА КНОПКИ "НЕТ" ==========
-  function moveNoButton(button, counter) {
-    // Полностью фиксируем кнопку
-    button.style.transition = 'none';
+  // ФУНКЦИЯ: КНОПКА "НЕТ" УЛЕТАЕТ
+  function makeNoButtonFly(button, clicks, phrases) {
+    button.classList.add('flying');
     button.style.position = 'fixed';
     button.style.zIndex = '9999';
-    button.classList.add('no-button-flying');
+    button.style.transition = 'none';
     
-    // ✅ ХАОТИЧНЫЕ КООРДИНАТЫ ПО ВСЕМУ ЭКРАНУ
-    const x = Math.random() * (window.innerWidth - 140);
-    const y = Math.random() * (window.innerHeight - 80);
+    // СЛУЧАЙНЫЕ КООРДИНАТЫ
+    let x = Math.random() * (window.innerWidth - 120);
+    let y = Math.random() * (window.innerHeight - 80);
     
-    // ✅ УМЕНЬШАЕТСЯ С КАЖДЫМ НАЖАТИЕМ (не возвращается!)
-    const scale = Math.max(0.92 - (counter * 0.16), 0.2);
+    // УМЕНЬШАЕТСЯ
+    let scale = Math.max(0.9 - clicks * 0.15, 0.25);
     
     button.style.left = x + 'px';
     button.style.top = y + 'px';
-    button.style.transform = `scale(${scale}) rotate(${Math.random() * 30 - 15}deg)`;
+    button.style.transform = `scale(${scale}) rotate(${Math.random()*20-10}deg)`;
     
-    // Меняем текст
-    if (counter < noTexts.length) {
-      button.textContent = noTexts[counter];
+    // ТЕКСТ
+    if (clicks < phrases.length) {
+      button.textContent = phrases[clicks];
     } else {
       button.textContent = '😿😿😿';
     }
-    
-    // Эффект дрожания
-    let shake = 0;
-    const shakeInterval = setInterval(() => {
-      shake += Math.random() * 4 - 2;
-      button.style.transform = `scale(${scale}) rotate(${Math.random() * 10 - 5}deg) translate(${shake}px, ${shake}px)`;
-      
-      if (shake > 20) clearInterval(shakeInterval);
-    }, 80);
   }
   
-  // ✅ СОЗДАЁМ НОВУЮ КНОПКУ "НЕТ" НА МЕСТЕ СТАРОЙ
-  function createNewNoButton(originalId) {
-    const buttonsContainer = document.querySelector('.card:not(.hidden) .buttons');
-    const newBtn = document.createElement('button');
-    
-    newBtn.className = 'no';
-    newBtn.id = originalId;
+  // ФУНКЦИЯ: НОВАЯ КНОПКА "НЕТ"
+  function replaceNoButton(buttonId, clicks) {
+    let container = document.querySelector('.buttons');
+    let newBtn = document.createElement('button');
+    newBtn.id = buttonId;
     newBtn.textContent = 'Нет 😈';
+    newBtn.className = buttonId;
     
-    // Копируем обработчики событий
-    if (originalId === 'noBtn') {
-      newBtn.addEventListener('click', function(e) {
+    if (buttonId === 'noBtn') {
+      newBtn.onclick = function(e) {
         e.preventDefault();
-        e.stopPropagation();
-        moveNoButton(this, noCounter1);
-        noCounter1++;
-        createNewNoButton('noBtn');
-      });
+        makeNoButtonFly(this, clicks, noPhrases);
+        noClicks1++;
+        replaceNoButton('noBtn', noClicks1);
+      };
     } else {
-      newBtn.addEventListener('click', function(e) {
+      newBtn.onclick = function(e) {
         e.preventDefault();
-        e.stopPropagation();
-        moveNoButton(this, noCounter2);
-        noCounter2++;
-        createNewNoButton('no2');
-      });
+        makeNoButtonFly(this, clicks, noPhrases);
+        noClicks2++;
+        replaceNoButton('no2', noClicks2);
+      };
     }
     
-    // Вставляем на место старой
-    buttonsContainer.appendChild(newBtn);
+    // Заменяем
+    let oldBtn = document.getElementById(buttonId);
+    container.replaceChild(newBtn, oldBtn);
   }
 });
