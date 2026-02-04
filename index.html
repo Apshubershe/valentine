@@ -1,30 +1,21 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Валентинка 💖</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<!-- Конверт -->
-<div class="envelope-container" id="envelopeContainer">
-  <div class="envelope">
-    <div class="envelope-flap"></div>
-    <div class="envelope-body">
-      <p class="letter-text">Привет! У меня есть для тебя маленькая валентинка 💌</p>
-    </div>
-  </div>
-  <input type="range" min="0" max="100" value="0" id="envelopeSlider">
-  <p class="slider-text">Потяни за ползунок, чтобы открыть письмо</p>
-</div>
-
 <!-- Первый экран -->
-<div class="card hidden" id="step1">
-  <img src="cat.png" class="cat" alt="Милый котик">
+<div class="card" id="step1">
+  <img src="cat.png" alt="Милый котик" class="cat" />
   <h1>Ева, будешь моей валентинкой? 💌</h1>
   <div class="buttons">
     <button id="yesBtn">Да 💖</button>
@@ -46,7 +37,7 @@
 <!-- Финальный экран -->
 <div class="card hidden" id="step3">
   <h1>💖💖💖</h1>
-  <p class="final-text">Жди моего сообщения<br>с подробной информацией ✨</p>
+  <p class="final-text">Жди моего сообщения<br />с подробной информацией ✨</p>
 </div>
 
 <!-- Звуки -->
