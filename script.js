@@ -17,7 +17,7 @@ const noTexts = ["Нет 😈", "Ты уверена?", "Точно нет?", "�
 let noCounter = 0;
 const minScale = 0.7;
 
-// Функция для случайного расположения кнопки "Нет" внутри родительского блока
+// Функция случайного расположения кнопки "Нет" в контейнере с плавным позиционированием
 function placeNoButtonRandom(btn) {
   const container = btn.parentElement;
   const containerRect = container.getBoundingClientRect();
@@ -39,37 +39,38 @@ function placeNoButtonRandom(btn) {
     noCounter++;
   }
 
-  // Уменьшаем размер кнопки "Нет" и одновременно увеличиваем кнопку "Да"
+  // Уменьшаем кнопку "Нет" и увеличиваем "Да"
   let scaleNo = 1 - noCounter * 0.1;
   if (scaleNo < minScale) scaleNo = minScale;
 
-  let scaleYes = 1 - (scaleNo - minScale); // Инвертируем, чтобы "Да" росла при уменьшении "Нет"
+  let scaleYes = 1 - (scaleNo - minScale); // Инверсия для "Да"
 
   btn.style.transform = `scale(${scaleNo})`;
   yesBtn.style.transform = `scale(${scaleYes})`;
 }
 
-// Обработчик для первой кнопки "Нет"
+// Обработчик кнопки "Нет" первого экрана
 noBtn.addEventListener("click", e => {
   e.preventDefault();
   placeNoButtonRandom(noBtn);
 });
 
-// При нажатии "Да" на первом экране
+// При нажатии "Да" первого экрана
 yesBtn.addEventListener("click", () => {
   yaySound.currentTime = 0;
   yaySound.play().catch(() => {});
   step1.classList.add("hidden");
   step2.classList.remove("hidden");
+  noCounter = 0; // сброс для второго этапа, если надо
 });
 
-// Обработчик для второй кнопки "Нет"
+// Обработчик кнопки "Нет" второго экрана
 no2.addEventListener("click", e => {
   e.preventDefault();
   placeNoButtonRandom(no2);
 });
 
-// При нажатии "Да" на втором экране
+// При нажатии "Да" второго экрана
 yes2.addEventListener("click", () => {
   happyKit.currentTime = 0;
   happyKit.play().catch(() => {});
@@ -78,7 +79,7 @@ yes2.addEventListener("click", () => {
   launchHearts();
 });
 
-// Функция создания и запуска анимации сердечек
+// Функция салюта сердечек
 function launchHearts() {
   for (let i = 0; i < 15; i++) {
     const heart = document.createElement("div");
@@ -95,7 +96,6 @@ function launchHearts() {
 
     heartsContainer.appendChild(heart);
 
-    // Удаляем сердечко через 2 секунды
     setTimeout(() => {
       heartsContainer.removeChild(heart);
     }, 2000);
