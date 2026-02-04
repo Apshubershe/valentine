@@ -12,17 +12,15 @@ const no2 = document.getElementById("no2");
 
 const heartsContainer = document.getElementById("hearts-container");
 
-// Состояние кнопки "Нет"
 let noClickCount = 0;
-const noTexts = ["Нет","Ты уверена?","Точно нет?","Ну пожалуйста…","ну котик(((","Евенок мой(((","((((((((((("];
+const noTexts = ["Нет","Ты уверена?","Точно нет?","Ну пожалуйста…"];
 
-// Убегание кнопки "Нет" по экрану
 function runAway(btn) {
   noClickCount++;
-  if(noClickCount <= noTexts.length){
-    btn.innerText = noTexts[noClickCount-1];
-  }
-  btn.style.transform = "scale("+(1-0.1*noClickCount)+")"; // уменьшаем кнопку
+  if(noClickCount <= noTexts.length) btn.innerText = noTexts[noClickCount-1];
+
+  // уменьшаем кнопку "Нет"
+  btn.style.transform = "scale("+(1-0.1*noClickCount)+")";
 
   const padding = 10;
   const maxX = window.innerWidth - btn.offsetWidth - padding;
@@ -32,31 +30,30 @@ function runAway(btn) {
   const y = Math.random()*maxY;
 
   btn.style.position = "fixed";
-  btn.style.left = x + "px";
-  btn.style.top = y + "px";
+  btn.style.left = x+"px";
+  btn.style.top = y+"px";
   btn.style.transition = "all 0.5s ease"; // плавное перемещение
 }
 
-// Салют сердечек
 function createHearts() {
   for(let i=0;i<10;i++){
     const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerText = "💖";
-    heart.style.left = Math.random()*window.innerWidth + "px";
-    heart.style.fontSize = (12 + Math.random()*18) + "px";
+    heart.className="heart";
+    heart.innerText="💖";
+    heart.style.left=Math.random()*window.innerWidth+"px";
+    heart.style.fontSize=(12 + Math.random()*18) + "px";
     heartsContainer.appendChild(heart);
     setTimeout(()=>heart.remove(),1200);
   }
 }
 
-// Кнопки "Нет"
+// кнопки "Нет"
 noBtn.onclick = ()=>runAway(noBtn);
 no2.onclick = ()=>runAway(no2);
 
-// Кнопки "Да"
+// кнопки "Да"
 yesBtn.onclick = ()=>{
-  yesBtn.style.transform = "scale(1.2)"; // растёт кнопка "Да"
+  yesBtn.style.transform="scale(1.2)";
   sound.currentTime=0; sound.play().catch(()=>{});
   createHearts();
   step1.classList.add("hidden");
