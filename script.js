@@ -1,83 +1,71 @@
-// Звуки
-const sound = document.getElementById("sound");       
-const happyKit = document.getElementById("happyKit"); 
-
-// Экраны
+// Конверт
+const envelopeSlider = document.getElementById("envelopeSlider");
+const envelopeFlap = document.querySelector(".envelope-flap");
+const envelopeContainer = document.getElementById("envelopeContainer");
 const step1 = document.getElementById("step1");
-const step2 = document.getElementById("step2");
-const step3 = document.getElementById("step3");
 
-// Кнопки
+envelopeSlider.addEventListener("input", () => {
+  const value = envelopeSlider.value;
+  envelopeFlap.style.transform = `rotateX(${-90 * (value/100)}deg)`;
+  if(value >= 100){
+    envelopeContainer.style.display = "none";
+    step1.classList.remove("hidden");
+  }
+});
+
+// Первый экран кнопки
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
+const step2 = document.getElementById("step2");
+const step3 = document.getElementById("step3");
+const yaySound = document.getElementById("sound");
+const happyKit = document.getElementById("happyKit");
 
+// Тексты для кнопки "Нет"
+const noTexts = ["Нет 😈", "Ты уверена?", "Точно нет?", "Ну пожалуйста…"];
+let noCounter = 0;
+
+function placeNoButtonRandom(btn){
+  const rect = btn.parentElement.getBoundingClientRect();
+  const btnRect = btn.getBoundingClientRect();
+  const padding = 5;
+  const maxX = rect.width - btnRect.width - padding;
+  const maxY = rect.height - btnRect.height - padding;
+  const x = Math.random() * maxX + padding/2;
+  const y = Math.random() * maxY + padding/2;
+  btn.style.left = x + "px";
+  btn.style.top = y + "px";
+  if(noCounter < noTexts.length){
+    btn.textContent = noTexts[noCounter];
+    noCounter++;
+  }
+  yesBtn.style.transform = `scale(${1 + noCounter*0.05})`;
+}
+
+noBtn.addEventListener("click", e=>{
+  e.preventDefault();
+  placeNoButtonRandom(noBtn);
+});
+
+yesBtn.addEventListener("click", ()=>{
+  yaySound.currentTime = 0;
+  yaySound.play().catch(()=>{});
+  step1.classList.add("hidden");
+  step2.classList.remove("hidden");
+});
+
+// Второй экран кнопки
 const yes2 = document.getElementById("yes2");
 const no2 = document.getElementById("no2");
 
-// Салют сердечек
-const heartsContainer = document.getElementById("hearts-container");
+no2.addEventListener("click", e=>{
+  e.preventDefault();
+  placeNoButtonRandom(no2);
+});
 
-// Состояние кнопки "Нет"
-let noClickCount = 0;
-const noTexts = ["Нет","Ты уверена?","Точно нет?","Ну пожалуйста…"];
-
-// Функция убегания кнопки "Нет"
-function runAway(btn) {
-  noClickCount++;
-  
-  if(noClickCount <= noTexts.length){
-    btn.innerText = noTexts[noClickCount-1];
-  }
-
-  // Уменьшение кнопки
-  let scale = Math.max(0.5, 1 - 0.1*noClickCount);
-  btn.style.transform = `scale(${scale})`;
-
-  // Ограничение движения по экрану
-  const padding = 10;
-  const maxX = window.innerWidth - btn.offsetWidth * scale - padding;
-  const maxY = window.innerHeight - btn.offsetHeight * scale - padding;
-
-  const x = Math.random() * maxX;
-  const y = Math.random() * maxY;
-
-  btn.style.position = "fixed";
-  btn.style.left = `${x}px`;
-  btn.style.top = `${y}px`;
-}
-
-// Салют сердечек
-function createHearts() {
-  for(let i=0; i<10; i++){
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerText = "💖";
-    heart.style.left = Math.random() * window.innerWidth + "px";
-    heart.style.fontSize = (12 + Math.random()*18) + "px";
-    heartsContainer.appendChild(heart);
-    setTimeout(()=>heart.remove(), 1200);
-  }
-}
-
-// Кнопка "Нет"
-noBtn.onclick = ()=>runAway(noBtn);
-no2.onclick = ()=>runAway(no2);
-
-// Первая кнопка "Да"
-yesBtn.onclick = ()=>{
-  yesBtn.style.transform = "scale(1.2)";
-  sound.currentTime = 0;
-  sound.play().catch(()=>{});
-  createHearts();
-  step1.classList.add("hidden");
-  step2.classList.remove("hidden");
-};
-
-// Вторая кнопка "Да"
-yes2.onclick = ()=>{
-  createHearts();
-  step2.classList.add("hidden");
-  step3.classList.remove("hidden");
+yes2.addEventListener("click", ()=>{
   happyKit.currentTime = 0;
   happyKit.play().catch(()=>{});
-};
+  step2.classList.add("hidden");
+  step3.classList.remove("hidden");
+});
