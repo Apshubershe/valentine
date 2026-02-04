@@ -134,14 +134,18 @@ body {
   object-fit: cover;
 }
 
-h1 { 
-  font-weight: 700; 
-  margin-bottom: 20px; 
+h1 {
   font-size: 2.1rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #ff6f91; /* запасной цвет */
+}
+
+/* Градиент ТОЛЬКО для текста */
+.gradient-text {
   background: linear-gradient(135deg, #ff6f91, #ff8ba7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .buttons {
