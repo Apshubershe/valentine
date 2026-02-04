@@ -28,6 +28,7 @@ body {
   box-shadow: 0 20px 40px rgba(0,0,0,0.15);
   position: relative;
   margin-bottom: 20px;
+  perspective: 1000px;
 }
 
 #envelopeFlap {
@@ -39,8 +40,9 @@ body {
   background: linear-gradient(145deg, #ff6f91, #ff8ba7);
   border-radius: 24px 24px 0 0;
   transform-origin: top;
-  transition: transform 0.8s ease;
+  transition: all 0.8s ease;
   box-shadow: 0 8px 25px rgba(255,111,145,0.4);
+  transform: translateY(0px);
 }
 
 #envelopeText {
@@ -104,6 +106,7 @@ body {
   border-radius: 20px;
   margin-bottom: 20px;
   box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  object-fit: cover;
 }
 
 h1 {
@@ -134,12 +137,12 @@ button {
   transition: all 0.3s ease;
 }
 
-#yesBtn, #yes2 {
+.yes {
   background: linear-gradient(145deg, #ff6f91, #ff8ba7);
   color: white;
 }
 
-#noBtn, #no2 {
+.no {
   background: linear-gradient(145deg, #f8f9fa, #e9ecef);
   color: #666;
 }
@@ -158,6 +161,7 @@ button:hover {
   position: fixed !important;
   z-index: 1000;
   pointer-events: auto;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
 }
 
 @media (max-width: 480px) {
