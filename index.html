@@ -2,21 +2,16 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Письмо Еве 💌</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Аудио -->
-  <audio id="yepSound" preload="auto">
-    <source src="yepiii.mp3" type="audio/mpeg">
-  </audio>
-  <audio id="happykit" preload="auto">
-    <source src="happycat.mp3" type="audio/mpeg">
-  </audio>
 
-  <!-- 1. Конверт -->
+  <audio id="yepSound" preload="auto"><source src="yepiii.mp3" type="audio/mpeg"></audio>
+  <audio id="happyKit" preload="auto"><source src="happykit.mp3" type="audio/mpeg"></audio>
+
   <div id="envelopeContainer">
     <div id="envelope">
       <div id="envelopeFlap"></div>
@@ -26,8 +21,7 @@
     <div id="sliderHint">Потяни ползунок, чтобы открыть письмо</div>
   </div>
 
-  <!-- 2. Первый экран -->
-  <div class="card hidden active" id="step1">
+  <div class="card hidden" id="step1">
     <img src="cat.png" alt="Милый котик" class="cat">
     <h1>Ева, будешь моей валентинкой? 💌</h1>
     <div class="buttons">
@@ -36,22 +30,20 @@
     </div>
   </div>
 
-  <!-- 3. Второй экран -->
   <div class="card hidden" id="step2">
-    <video src="happycat.mp4" autoplay loop muted class="video" playsinline></video>
+    <video id="videoCat" src="happycat.mp4" loop muted playsinline class="video"></video>
     <h1>Урааа! Ты моя валентинка 💕</h1>
-    <p class="final-text">Проведём 14 февраля вместе? У меня есть план для нас 😏</p>
+    <p class="final-text">Проведём 14 февраля вместе? У меня есть план 😏</p>
     <div class="buttons">
       <button id="yes2" class="yes">Да 💖</button>
       <button id="no2" class="no">Нет 😈</button>
     </div>
   </div>
 
-  <!-- 4. Финал -->
   <div class="card hidden" id="step3">
     <img src="cat.png" alt="Праздник" class="cat">
     <h1>💖💖💖</h1>
-    <div class="final-text">Жди моего сообщения с подробной информацией ✨</div>
+    <div class="final-text">Жди моего сообщения с подробностями ✨</div>
   </div>
 
   <script src="script.js"></script>
