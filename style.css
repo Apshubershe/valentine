@@ -81,12 +81,3 @@ button:last-child {
   to { transform: scale(1); opacity: 1; }
 }
 
-/* сердечки */
-body::after {
-  content: "💖 💕 💘 💝";
-  position: fixed;
-  inset: 0;
-  font-size: 40px;
-  opacity: .15;
-  pointer-events: none;
-}
