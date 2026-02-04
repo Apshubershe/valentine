@@ -7,17 +7,26 @@ const step3 = document.getElementById("step3");
 const no1 = document.getElementById("no1");
 const no2 = document.getElementById("no2");
 
+// Убегание по X, Y фиксированная
 function runAway(btn) {
-  const maxX = window.innerWidth - btn.offsetWidth;
-  const maxY = window.innerHeight - btn.offsetHeight;
+  const container = btn.parentElement;
+  const rect = container.getBoundingClientRect();
+  const padding = 10;
 
-  btn.style.left = Math.random() * maxX + "px";
-  btn.style.top = Math.random() * maxY + "px";
+  const maxX = rect.width - btn.offsetWidth - padding;
+  const y = btn.offsetTop; // фиксированная высота Y
+  const x = Math.random() * maxX;
+
+  btn.style.position = "absolute";
+  btn.style.left = x + "px";
+  btn.style.top = y + "px";
 }
 
+// Кнопки "Нет" убегают при клике
 no1.onclick = () => runAway(no1);
 no2.onclick = () => runAway(no2);
 
+// Кнопки "Да" — переход на следующий шаг
 document.getElementById("yes1").onclick = () => {
   sound.currentTime = 0;
   sound.play().catch(()=>{});
