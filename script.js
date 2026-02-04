@@ -7,17 +7,17 @@ const step3 = document.getElementById("step3");
 const no1 = document.getElementById("no1");
 const no2 = document.getElementById("no2");
 
-// Убегание по X, Y фиксированная
+// Функция убегания по всему экрану
 function runAway(btn) {
-  const container = btn.parentElement;
-  const rect = container.getBoundingClientRect();
   const padding = 10;
 
-  const maxX = rect.width - btn.offsetWidth - padding;
-  const y = btn.offsetTop; // фиксированная высота Y
-  const x = Math.random() * maxX;
+  const maxX = window.innerWidth - btn.offsetWidth - padding;
+  const maxY = window.innerHeight - btn.offsetHeight - padding;
 
-  btn.style.position = "absolute";
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
+
+  btn.style.position = "fixed";
   btn.style.left = x + "px";
   btn.style.top = y + "px";
 }
