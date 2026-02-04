@@ -1,8 +1,8 @@
 // Звуки
-const sound = document.getElementById("sound");       // первый звук "yepiii"
-const happyKit = document.getElementById("happyKit"); // второй звук "happykit"
+const sound = document.getElementById("sound");       
+const happyKit = document.getElementById("happyKit"); 
 
-// Шаги/экраны
+// Экраны
 const step1 = document.getElementById("step1");
 const step2 = document.getElementById("step2");
 const step3 = document.getElementById("step3");
@@ -14,7 +14,7 @@ const noBtn = document.getElementById("noBtn");
 const yes2 = document.getElementById("yes2");
 const no2 = document.getElementById("no2");
 
-// Контейнер для салюта сердечек
+// Салют сердечек
 const heartsContainer = document.getElementById("hearts-container");
 
 // Состояние кнопки "Нет"
@@ -24,15 +24,16 @@ const noTexts = ["Нет","Ты уверена?","Точно нет?","Ну по
 // Функция убегания кнопки "Нет"
 function runAway(btn) {
   noClickCount++;
+  
   if(noClickCount <= noTexts.length){
     btn.innerText = noTexts[noClickCount-1];
   }
 
-  // уменьшаем кнопку "Нет"
-  let scale = Math.max(0.5, 1 - 0.1*noClickCount); // минимальный размер 0.5
+  // Уменьшение кнопки
+  let scale = Math.max(0.5, 1 - 0.1*noClickCount);
   btn.style.transform = `scale(${scale})`;
 
-  // Ограничиваем движение, чтобы кнопка не вылетала за экран
+  // Ограничение движения по экрану
   const padding = 10;
   const maxX = window.innerWidth - btn.offsetWidth * scale - padding;
   const maxY = window.innerHeight - btn.offsetHeight * scale - padding;
@@ -41,8 +42,8 @@ function runAway(btn) {
   const y = Math.random() * maxY;
 
   btn.style.position = "fixed";
-  btn.style.left = x + "px";
-  btn.style.top = y + "px";
+  btn.style.left = `${x}px`;
+  btn.style.top = `${y}px`;
 }
 
 // Салют сердечек
@@ -58,13 +59,13 @@ function createHearts() {
   }
 }
 
-// Обработчики кнопок "Нет"
+// Кнопка "Нет"
 noBtn.onclick = ()=>runAway(noBtn);
 no2.onclick = ()=>runAway(no2);
 
 // Первая кнопка "Да"
 yesBtn.onclick = ()=>{
-  yesBtn.style.transform = "scale(1.2)"; // растём
+  yesBtn.style.transform = "scale(1.2)";
   sound.currentTime = 0;
   sound.play().catch(()=>{});
   createHearts();
@@ -77,8 +78,6 @@ yes2.onclick = ()=>{
   createHearts();
   step2.classList.add("hidden");
   step3.classList.remove("hidden");
-
-  // проигрываем звук happykit
   happyKit.currentTime = 0;
   happyKit.play().catch(()=>{});
 };
