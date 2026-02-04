@@ -1,112 +1,138 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // Элементы
-  const screens = [
-    document.getElementById('screen1'),
-    document.getElementById('screen2'),
-    document.getElementById('screen3'),
-    document.getElementById('screen4')
-  ];
-  
-  const slider = document.getElementById('slider');
-  const flap = document.getElementById('flap');
-  const envelopeText = document.getElementById('envelopeText');
-  const sliderHint = document.getElementById('sliderHint');
-  
-  const yes1 = document.getElementById('yes1');
-  const no1 = document.getElementById('no1');
+\document.addEventListener('DOMContentLoaded', function() {
+  // === ЭЛЕМЕНТЫ ===
+  const slider = document.getElementById('envelopeSlider');
+  const flap = document.getElementById('envelopeFlap');
+  const text = document.getElementById('envelopeText');
+  const container = document.getElementById('envelopeContainer');
+  const hint = document.getElementById('sliderHint');
+
+  const step1 = document.getElementById('step1');
+  const step2 = document.getElementById('step2');
+  const step3 = document.getElementById('step3');
+
+  const yes1 = document.getElementById('yesBtn');
+  const no1 = document.getElementById('noBtn');
   const yes2 = document.getElementById('yes2');
   const no2 = document.getElementById('no2');
-  
-  const clickSound = document.getElementById('clickSound');
-  const happySound = document.getElementById('happySound');
-  
-  let currentScreen = 0;
-  let noCount = 0;
-  const noTexts = ['Точно нет? 😈', 'Ну пожалуйста 🥺', 'Последний шанс 💔', '😿😿😿'];
 
-  // Ползунок конверта
+  // === ЗВУКИ ===
+  const yepSound = document.getElementById('yepSound');
+  const happyKit = document.getElementById('happyKit');
+
+  let noCount1 = 0;
+  let noCount2 = 0;
+
+  const phrases = [
+    'Точно нет? 😈',
+    'Ну пожалуйста… 🥺', 
+    'Последний шанс! 💔',
+    '😿😿😿',
+    'Пожалеешь! 😤'
+  ];
+
+  // === 1. КОНВЕРТ ===
   slider.addEventListener('input', function() {
-    const value = parseInt(this.value);
+    const val = parseInt(this.value);
     
-    // Цвет ползунка
-    this.style.background = `linear-gradient(to right, #ff6f91 ${value}%, #eee ${value}%)`;
+    // CSS переменная для стиля
+    document.documentElement.style.setProperty('--progress', val + '%');
     
-    // Открытие конверта
-    flap.style.transform = `rotateX(${value * 0.8}deg) translateY(${-value}px)`;
-    
-    if (value > 70) {
-      envelopeText.style.opacity = '0.4';
-      sliderHint.textContent = 'Открывается... ✨';
+    flap.style.transform = `translateY(${-2.1 * val}px) rotateX(${val * 0.3}deg)`;
+
+    if (val > 70) {
+      text.style.opacity = '0.3';
+      hint.innerHTML = 'Открывается... ✨';
     }
-    
-    // Переход к первому вопросу
-    if (value === 100) {
+
+    if (val === 100) {
+      container.style.transition = 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+      container.style.opacity = '0';
+      container.style.transform = 'scale(0.9)';
+
       setTimeout(() => {
-        screens[0].classList.remove('active');
-        screens[1].classList.add('active');
-        currentScreen = 1;
-      }, 500);
+        container.style.display = 'none';
+        step1.classList.add('active'); // ✅ Показываем первый шаг
+      }, 600);
     }
   });
 
-  // Первый экран - ДА
+  // === 2. ПЕРВЫЙ ЭКРАН ===
   yes1.onclick = function() {
-    playSound(clickSound);
-    screens[1].classList.remove('active');
-    setTimeout(() => {
-      screens[2].classList.add('active');
-      currentScreen = 2;
-    }, 300);
+    playSound(yepSound);
+    step1.classList.remove('active');
+    setTimeout(() => step2.classList.add('active'), 400);
   };
 
-  // Первый экран - НЕТ
-  no1.onclick = function() {
-    flyNoButton(this, 1);
+  no1.onclick = function(e) {
+    e.preventDefault();
+    flyNoButton(no1, noCount1, phrases);
+    noCount1++;
+    replaceNoButton(step1, noCount1, phrases);
   };
 
-  // Второй экран - ДА
+  // === 3. ВТОРОЙ ЭКРАН ===
   yes2.onclick = function() {
-    playSound(happySound);
-    screens[2].classList.remove('active');
+    playSound(happyKit);
+    step2.classList.remove('active');
     setTimeout(() => {
-      screens[3].classList.add('active');
-      currentScreen = 3;
-    }, 300);
+      step3.classList.add('active');
+      // ✅ Автоскролл к финалу
+      step3.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 400);
   };
 
-  // Второй экран - НЕТ
-  no2.onclick = function() {
-    flyNoButton(this, 2);
+  no2.onclick = function(e) {
+    e.preventDefault();
+    flyNoButton(no2, noCount2, phrases);
+    noCount2++;
+    replaceNoButton(step2, noCount2, phrases);
   };
 
+  // === УЛУЧШЕННЫЕ ФУНКЦИИ ===
   function playSound(sound) {
     sound.currentTime = 0;
-    sound.play().catch(() => {});
+    sound.play().catch(() => {}); // Игнорируем ошибки автоплея
   }
 
-  function flyNoButton(button, screenNum) {
-    noCount++;
-    button.style.position = 'fixed';
-    button.style.zIndex = '1000';
-    button.style.transition = 'all 0.7s ease';
-    button.style.transform = `translate(${Math.random()*300-150}px, ${Math.random()*300-150}px) rotate(360deg) scale(0.6)`;
-    button.innerHTML = noTexts[noCount % noTexts.length] || '😿';
-    
-    setTimeout(() => {
-      button.remove();
-      createNewNoButton(screenNum);
-    }, 500);
+  function flyNoButton(btn, count, phrases) {
+    btn.classList.add('no-button-flying', 'flying');
+    btn.style.position = 'fixed';
+    btn.style.zIndex = '9999';
+    btn.style.transition = 'all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+
+    const rect = btn.getBoundingClientRect();
+    const x = Math.random() * (window.innerWidth - rect.width);
+    const y = Math.random() * (window.innerHeight - rect.height);
+    const scale = Math.max(0.8 - count * 0.12, 0.3);
+
+    btn.style.left = x + 'px';
+    btn.style.top = y + 'px';
+    btn.style.transform = `scale(${scale}) rotate(${Math.random() * 720 - 360}deg)`;
+
+    // Меняем текст улетающей кнопки
+    btn.innerHTML = phrases[count] || '😿💔';
   }
 
-  function createNewNoButton(screenNum) {
-    const screen = screens[screenNum - 1];
-    const buttons = screen.querySelector('.buttons');
-    
+  function replaceNoButton(card, count, phrases) {
+    const container = card.querySelector('.buttons');
     const newBtn = document.createElement('button');
-    newBtn.className = 'no';
-    newBtn.innerHTML = noTexts[noCount % noTexts.length] || 'Нет 😈';
-    newBtn.onclick = () => flyNoButton(newBtn, screenNum);
     
-    buttons.appendChild(newBtn);
+    newBtn.className = 'no';
+    newBtn.innerHTML = count > 0 ? phrases[count - 1] || 'Нет 😈' : 'Нет 😈';
+
+    newBtn.onclick = function(e) {
+      e.preventDefault();
+      const newCount = card.id === 'step1' ? ++noCount1 : ++noCount2;
+      flyNoButton(newBtn, newCount - 1, phrases);
+      replaceNoButton(card, newCount, phrases);
+    };
+
+    const oldBtn = container.querySelector('.no:not(.flying)');
+    if (oldBtn) container.replaceChild(newBtn, oldBtn);
   }
+
+  // ✅ Блокировка скролла на мобилках
+  document.addEventListener('touchmove', e => {
+    if (document.querySelector('.card.active')) e.preventDefault();
+  }, { passive: false });
 });
