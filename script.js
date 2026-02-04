@@ -1,6 +1,5 @@
-// Ждём загрузки DOM
 document.addEventListener('DOMContentLoaded', function() {
-
+  
   // Все элементы
   const slider = document.getElementById('envelopeSlider');
   const flap = document.getElementById('envelopeFlap');
@@ -17,127 +16,100 @@ document.addEventListener('DOMContentLoaded', function() {
   const yes2 = document.getElementById('yes2');
   const no2 = document.getElementById('no2');
   
-  const sound1 = document.getElementById('sound1');
-  const sound2 = document.getElementById('sound2');
+  let noCount1 = 0;
+  let noCount2 = 0;
+  const phrases = ['Нет 😈', 'Ты уверена?', 'Точно нет?', 'Ну пожалуйста…', 'Последний шанс! 🥺'];
   
-  let noClicks1 = 0;
-  let noClicks2 = 0;
-  
-  const noPhrases = ['Нет 😈', 'Ты уверена?', 'Точно нет?', 'Ну пожалуйста…', 'Последний шанс! 🥺'];
-  
-  // 1. КОНВЕРТ - РАБОТАЕТ ГАРАНТИРОВАННО
+  // 1. ПОЛЗУНОК КОНВЕРТА
   slider.addEventListener('input', function() {
-    let progress = this.value;
+    let val = parseInt(this.value);
     
-    // Прогресс-бар (визуально)
-    let gradient = `linear-gradient(to right, #e9ecef ${progress}%, #f8f9fa ${progress}%)`;
-    this.style.background = gradient;
+    // Прогресс-бар
+    this.style.background = `linear-gradient(to right, #ff6f91 ${val}%, #e9ecef ${val}%)`;
     
-    // Открытие клапана
-    let angle = -120 * (progress / 100);
-    flap.style.transform = `rotateX(${angle}deg)`;
+    // Двигаем клапан вверх
+    let move = -2.1 * val;
+    flap.style.transform = `translateY(${move}px)`;
     
-    // Эффекты текста
-    if (progress > 70) {
+    if (val > 70) {
       text.style.opacity = '0.3';
       hint.textContent = 'Открывается... ✨';
     }
     
-    // ✅ ПОЛНОЕ ОТКРЫТИЕ
-    if (progress == 100) {
+    if (val === 100) {
+      container.style.transition = 'all 0.5s ease';
+      container.style.opacity = '0';
+      container.style.transform = 'scale(0.95)';
       setTimeout(() => {
-        container.style.opacity = '0';
-        container.style.transform = 'scale(0.9)';
-        setTimeout(() => {
-          container.style.display = 'none';
-          step1.classList.add('active');
-        }, 300);
-      }, 600);
+        container.style.display = 'none';
+        step1.classList.add('active');
+      }, 500);
     }
   });
   
   // 2. ПЕРВЫЙ ЭКРАН
   yes1.onclick = function() {
-    sound1.currentTime = 0;
-    sound1.play().catch(() => {});
     step1.classList.remove('active');
     setTimeout(() => step2.classList.add('active'), 300);
   };
   
   no1.onclick = function(e) {
     e.preventDefault();
-    makeNoButtonFly(no1, noClicks1, noPhrases);
-    noClicks1++;
-    replaceNoButton('noBtn', noClicks1);
+    flyNoButton(no1, noCount1);
+    noCount1++;
+    replaceNoButton(step1, noCount1);
   };
   
   // 3. ВТОРОЙ ЭКРАН
   yes2.onclick = function() {
-    sound2.currentTime = 0;
-    sound2.play().catch(() => {});
     step2.classList.remove('active');
     setTimeout(() => step3.classList.add('active'), 300);
   };
   
   no2.onclick = function(e) {
     e.preventDefault();
-    makeNoButtonFly(no2, noClicks2, noPhrases);
-    noClicks2++;
-    replaceNoButton('no2', noClicks2);
+    flyNoButton(no2, noCount2);
+    noCount2++;
+    replaceNoButton(step2, noCount2);
   };
   
-  // ФУНКЦИЯ: КНОПКА "НЕТ" УЛЕТАЕТ
-  function makeNoButtonFly(button, clicks, phrases) {
-    button.classList.add('flying');
-    button.style.position = 'fixed';
-    button.style.zIndex = '9999';
-    button.style.transition = 'none';
+  // КНОПКА "НЕТ" УЛЕТАЕТ
+  function flyNoButton(btn, count) {
+    btn.classList.add('flying');
+    btn.style.position = 'fixed';
+    btn.style.zIndex = '9999';
+    btn.style.transition = 'none';
     
-    // СЛУЧАЙНЫЕ КООРДИНАТЫ
     let x = Math.random() * (window.innerWidth - 120);
     let y = Math.random() * (window.innerHeight - 80);
+    let scale = Math.max(0.9 - count * 0.15, 0.25);
     
-    // УМЕНЬШАЕТСЯ
-    let scale = Math.max(0.9 - clicks * 0.15, 0.25);
-    
-    button.style.left = x + 'px';
-    button.style.top = y + 'px';
-    button.style.transform = `scale(${scale}) rotate(${Math.random()*20-10}deg)`;
-    
-    // ТЕКСТ
-    if (clicks < phrases.length) {
-      button.textContent = phrases[clicks];
-    } else {
-      button.textContent = '😿😿😿';
-    }
+    btn.style.left = x + 'px';
+    btn.style.top = y + 'px';
+    btn.style.transform = `scale(${scale}) rotate(${Math.random()*30-15}deg)`;
+    btn.textContent = phrases[count] || '😿😿😿';
   }
   
-  // ФУНКЦИЯ: НОВАЯ КНОПКА "НЕТ"
-  function replaceNoButton(buttonId, clicks) {
-    let container = document.querySelector('.buttons');
+  // НОВАЯ КНОПКА "НЕТ"
+  function replaceNoButton(card, count) {
+    let container = card.querySelector('.buttons');
     let newBtn = document.createElement('button');
-    newBtn.id = buttonId;
+    newBtn.className = 'no';
     newBtn.textContent = 'Нет 😈';
-    newBtn.className = buttonId;
     
-    if (buttonId === 'noBtn') {
-      newBtn.onclick = function(e) {
-        e.preventDefault();
-        makeNoButtonFly(this, clicks, noPhrases);
-        noClicks1++;
-        replaceNoButton('noBtn', noClicks1);
-      };
-    } else {
-      newBtn.onclick = function(e) {
-        e.preventDefault();
-        makeNoButtonFly(this, clicks, noPhrases);
-        noClicks2++;
-        replaceNoButton('no2', noClicks2);
-      };
-    }
+    newBtn.onclick = function(e) {
+      e.preventDefault();
+      flyNoButton(newBtn, count);
+      if (card.id === 'step1') {
+        noCount1++;
+        replaceNoButton(step1, noCount1);
+      } else {
+        noCount2++;
+        replaceNoButton(step2, noCount2);
+      }
+    };
     
-    // Заменяем
-    let oldBtn = document.getElementById(buttonId);
+    let oldBtn = container.querySelector('.no');
     container.replaceChild(newBtn, oldBtn);
   }
 });
