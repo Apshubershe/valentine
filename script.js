@@ -1,4 +1,5 @@
-\document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
+
   // === ЭЛЕМЕНТЫ ===
   const slider = document.getElementById('envelopeSlider');
   const flap = document.getElementById('envelopeFlap');
@@ -23,116 +24,124 @@
   let noCount2 = 0;
 
   const phrases = [
-    'Точно нет? 😈',
-    'Ну пожалуйста… 🥺', 
-    'Последний шанс! 💔',
-    '😿😿😿',
-    'Пожалеешь! 😤'
+    'Нет 😈',
+    'Ты уверена?',
+    'Точно нет?',
+    'Ну пожалуйста…',
+    'Последний шанс! 🥺',
+    '😿😿😿'
   ];
 
-  // === 1. КОНВЕРТ ===
+  // ===============================
+  // 1. КОНВЕРТ
+  // ===============================
   slider.addEventListener('input', function() {
     const val = parseInt(this.value);
-    
-    // CSS переменная для стиля
-    document.documentElement.style.setProperty('--progress', val + '%');
-    
-    flap.style.transform = `translateY(${-2.1 * val}px) rotateX(${val * 0.3}deg)`;
+
+    this.style.background =
+      `linear-gradient(to right, #ff6f91 ${val}%, #e9ecef ${val}%)`;
+
+    flap.style.transform = `translateY(${-2.1 * val}px)`;
 
     if (val > 70) {
       text.style.opacity = '0.3';
-      hint.innerHTML = 'Открывается... ✨';
+      hint.textContent = 'Открывается... ✨';
     }
 
     if (val === 100) {
-      container.style.transition = 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+      container.style.transition = 'all 0.5s ease';
       container.style.opacity = '0';
-      container.style.transform = 'scale(0.9)';
+      container.style.transform = 'scale(0.95)';
 
       setTimeout(() => {
         container.style.display = 'none';
-        step1.classList.add('active'); // ✅ Показываем первый шаг
-      }, 600);
+        step1.classList.add('active');
+      }, 500);
     }
   });
 
-  // === 2. ПЕРВЫЙ ЭКРАН ===
+  // ===============================
+  // 2. ПЕРВЫЙ ЭКРАН
+  // ===============================
   yes1.onclick = function() {
-    playSound(yepSound);
+    yepSound.currentTime = 0;
+    yepSound.play().catch(() => {});
+
     step1.classList.remove('active');
-    setTimeout(() => step2.classList.add('active'), 400);
+    setTimeout(() => step2.classList.add('active'), 300);
   };
 
   no1.onclick = function(e) {
     e.preventDefault();
-    flyNoButton(no1, noCount1, phrases);
+    flyNoButton(no1, noCount1);
     noCount1++;
-    replaceNoButton(step1, noCount1, phrases);
+    replaceNoButton(step1, noCount1);
   };
 
-  // === 3. ВТОРОЙ ЭКРАН ===
+  // ===============================
+  // 3. ВТОРОЙ ЭКРАН
+  // ===============================
   yes2.onclick = function() {
-    playSound(happyKit);
+    happyKit.currentTime = 0;
+    happyKit.play().catch(() => {});
+
     step2.classList.remove('active');
-    setTimeout(() => {
-      step3.classList.add('active');
-      // ✅ Автоскролл к финалу
-      step3.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 400);
+    setTimeout(() => step3.classList.add('active'), 300);
   };
 
   no2.onclick = function(e) {
     e.preventDefault();
-    flyNoButton(no2, noCount2, phrases);
+    flyNoButton(no2, noCount2);
     noCount2++;
-    replaceNoButton(step2, noCount2, phrases);
+    replaceNoButton(step2, noCount2);
   };
 
-  // === УЛУЧШЕННЫЕ ФУНКЦИИ ===
-  function playSound(sound) {
-    sound.currentTime = 0;
-    sound.play().catch(() => {}); // Игнорируем ошибки автоплея
-  }
-
-  function flyNoButton(btn, count, phrases) {
-    btn.classList.add('no-button-flying', 'flying');
+  // ===============================
+  // КНОПКА "НЕТ" УЛЕТАЕТ
+  // ===============================
+  function flyNoButton(btn, count) {
+    btn.classList.add('flying');
     btn.style.position = 'fixed';
     btn.style.zIndex = '9999';
-    btn.style.transition = 'all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+    btn.style.transition = 'none';
 
-    const rect = btn.getBoundingClientRect();
-    const x = Math.random() * (window.innerWidth - rect.width);
-    const y = Math.random() * (window.innerHeight - rect.height);
-    const scale = Math.max(0.8 - count * 0.12, 0.3);
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 80);
+    const scale = Math.max(0.9 - count * 0.15, 0.25);
 
     btn.style.left = x + 'px';
     btn.style.top = y + 'px';
-    btn.style.transform = `scale(${scale}) rotate(${Math.random() * 720 - 360}deg)`;
+    btn.style.transform =
+      `scale(${scale}) rotate(${Math.random() * 30 - 15}deg)`;
 
-    // Меняем текст улетающей кнопки
-    btn.innerHTML = phrases[count] || '😿💔';
+    btn.textContent = phrases[count] || '😿';
   }
 
-  function replaceNoButton(card, count, phrases) {
+  // ===============================
+  // НОВАЯ КНОПКА "НЕТ"
+  // ===============================
+  function replaceNoButton(card, count) {
     const container = card.querySelector('.buttons');
     const newBtn = document.createElement('button');
-    
+
     newBtn.className = 'no';
-    newBtn.innerHTML = count > 0 ? phrases[count - 1] || 'Нет 😈' : 'Нет 😈';
+    newBtn.textContent = 'Нет 😈';
 
     newBtn.onclick = function(e) {
       e.preventDefault();
-      const newCount = card.id === 'step1' ? ++noCount1 : ++noCount2;
-      flyNoButton(newBtn, newCount - 1, phrases);
-      replaceNoButton(card, newCount, phrases);
+      flyNoButton(newBtn, count);
+
+      if (card.id === 'step1') {
+        noCount1++;
+        replaceNoButton(step1, noCount1);
+      } else {
+        noCount2++;
+        replaceNoButton(step2, noCount2);
+      }
     };
 
-    const oldBtn = container.querySelector('.no:not(.flying)');
-    if (oldBtn) container.replaceChild(newBtn, oldBtn);
+    const oldBtn = container.querySelector('.no');
+    container.replaceChild(newBtn, oldBtn);
   }
 
-  // ✅ Блокировка скролла на мобилках
-  document.addEventListener('touchmove', e => {
-    if (document.querySelector('.card.active')) e.preventDefault();
-  }, { passive: false });
-});
+}); вот JS
