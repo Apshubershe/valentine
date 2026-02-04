@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Будешь моей валентинкой? 💖</title>
+  <title>Валентинка 💖</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,17 +12,37 @@
 </head>
 <body>
 
-  <div class="card">
-    <img src="cat.png" alt="Котик" class="cat">
+<div class="card" id="step1">
+  <img src="cat.png" class="cat">
+  <h1>Будешь моей валентинкой? 💌</h1>
 
-    <h1>Будешь моей валентинкой? 💌</h1>
-
-    <div class="buttons">
-      <button id="yesBtn">Да 💖</button>
-      <button id="noBtn">Нет 😈</button>
-    </div>
+  <div class="buttons">
+    <button id="yes1">Да 💖</button>
+    <button id="no1">Нет 😈</button>
   </div>
+</div>
 
-  <script src="script.js"></script>
+<div class="card hidden" id="step2">
+  <video src="happycat.mp4" autoplay loop muted class="video"></video>
+  <h1>Урааа! Ты будешь моей валентинкой 💕</h1>
+  <p>Проведём 14 февраля вместе?<br>У меня есть план для нас 😏</p>
+
+  <div class="buttons">
+    <button id="yes2">Да 💖</button>
+    <button id="no2">Нет 😈</button>
+  </div>
+</div>
+
+<div class="card hidden" id="step3">
+  <h1>💖💖💖</h1>
+  <p class="final-text">
+    Жди моего сообщения<br>
+    с подробной информацией ✨
+  </p>
+</div>
+
+<audio id="sound" src="yepiii.mp3"></audio>
+
+<script src="script.js"></script>
 </body>
 </html>
