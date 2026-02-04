@@ -1,11 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
+* { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: 'Nunito', sans-serif;
   background: linear-gradient(135deg, #ff9a9e, #fecfef);
@@ -15,7 +8,6 @@ body {
   align-items: center;
   flex-direction: column;
   padding: 20px;
-  user-select: none;
 }
 
 #envelope {
@@ -42,40 +34,24 @@ body {
 #slider {
   width: 80%;
   cursor: pointer;
-  -webkit-appearance: none;
   height: 8px;
-  background: #f1f1f1;
   border-radius: 10px;
-  outline: none;
-  transition: background 0.3s;
+  -webkit-appearance: none;
+  background: #f1f1f1;
 }
 
 #slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  appearance: none;
   width: 30px;
   height: 30px;
   background: #ff6f91;
-  cursor: pointer;
   border-radius: 50%;
-  box-shadow: 0 4px 10px rgba(255, 111, 145, 0.7);
-  transition: background 0.3s;
-}
-
-#slider::-moz-range-thumb {
-  width: 30px;
-  height: 30px;
-  background: #ff6f91;
   cursor: pointer;
-  border-radius: 50%;
-  box-shadow: 0 4px 10px rgba(255, 111, 145, 0.7);
-  transition: background 0.3s;
 }
 
 #slider-text {
   margin-top: 15px;
   color: #777;
-  font-size: 1rem;
 }
 
 .card {
@@ -87,12 +63,9 @@ body {
   text-align: center;
   box-shadow: 0 12px 30px rgba(0,0,0,0.15);
   position: relative;
-  user-select: none;
 }
 
-.hidden {
-  display: none;
-}
+.hidden { display: none; }
 
 .cat {
   width: 120px;
@@ -102,11 +75,7 @@ body {
   box-shadow: 0 6px 16px rgba(0,0,0,0.2);
 }
 
-h1 {
-  font-weight: 700;
-  margin-bottom: 14px;
-  font-size: 1.8rem;
-}
+h1 { font-weight: 700; margin-bottom: 14px; font-size: 1.8rem; }
 
 .buttons {
   position: relative;
@@ -124,8 +93,6 @@ button {
   font-size: 18px;
   font-weight: 600;
   box-shadow: 0 6px 14px rgba(0,0,0,0.18);
-  transition: background 0.3s ease;
-  user-select: none;
   position: relative;
   background: #ff6f91;
   color: white;
@@ -135,17 +102,9 @@ button {
 button#noBtn {
   background: #f1f1f1;
   color: #333;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
   position: absolute;
   right: 0;
   top: 0;
-  transform-origin: center center;
 }
 
-button#yesBtn {
-  background: #ff6f91;
-  color: white;
-  position: relative;
-  left: 0;
-  top: 0;
-}
+button#yesBtn { position: relative; left: 0; top: 0; }
