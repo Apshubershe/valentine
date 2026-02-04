@@ -4,52 +4,56 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Письмо Еве 💌</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Аудио -->
+  <audio id="yepSound" preload="auto">
+    <source src="yepiii.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="happyKit" preload="auto">
+    <source src="happycat.mp3" type="audio/mpeg">
+  </audio>
 
-<!-- Конверт с ползунком -->
-<div id="envelopeContainer">
-  <div id="envelope">
-    <div id="envelopeFlap"></div>
-    <div id="envelopeText">Письмо Еве 💌</div>
+  <!-- 1. Конверт -->
+  <div id="envelopeContainer">
+    <div id="envelope">
+      <div id="envelopeFlap"></div>
+      <div id="envelopeText">Письмо Еве 💌</div>
+    </div>
+    <input type="range" min="0" max="100" value="0" id="envelopeSlider">
+    <div id="sliderHint">Потяни ползунок, чтобы открыть письмо</div>
   </div>
-  <input type="range" min="0" max="100" value="0" id="envelopeSlider">
-  <div id="sliderHint">Потяни ползунок, чтобы открыть письмо</div>
-</div>
 
-<!-- Первый экран с вопросом -->
-<div class="card hidden" id="step1">
-  <img src="cat.png" alt="Милый котик" class="cat">
-  <h1>Ева, будешь моей валентинкой? 💌</h1>
-  <div class="buttons">
-    <button id="yesBtn">Да 💖</button>
-    <button id="noBtn">Нет 😈</button>
+  <!-- 2. Первый экран -->
+  <div class="card hidden active" id="step1">
+    <img src="cat.png" alt="Милый котик" class="cat">
+    <h1>Ева, будешь моей валентинкой? 💌</h1>
+    <div class="buttons">
+      <button id="yesBtn" class="yes">Да 💖</button>
+      <button id="noBtn" class="no">Нет 😈</button>
+    </div>
   </div>
-</div>
 
-<!-- Второй экран с видео -->
-<div class="card hidden" id="step2">
-  <video src="happycat.mp4" autoplay loop muted class="video" playsinline></video>
-  <h1>Урааа! Ты моя валентинка 💕</h1>
-  <p>Проведём 14 февраля вместе? У меня есть план для нас 😏</p>
-  <div class="buttons">
-    <button id="yes2">Да 💖</button>
-    <button id="no2">Нет 😈</button>
+  <!-- 3. Второй экран -->
+  <div class="card hidden" id="step2">
+    <video src="happycat.mp4" autoplay loop muted class="video" playsinline></video>
+    <h1>Урааа! Ты моя валентинка 💕</h1>
+    <p class="final-text">Проведём 14 февраля вместе? У меня есть план для нас 😏</p>
+    <div class="buttons">
+      <button id="yes2" class="yes">Да 💖</button>
+      <button id="no2" class="no">Нет 😈</button>
+    </div>
   </div>
-</div>
 
-<!-- Финальный экран -->
-<div class="card hidden" id="step3">
-  <h1>💖💖💖</h1>
-  <p class="final-text">Жди моего сообщения с подробной информацией ✨</p>
-</div>
+  <!-- 4. Финал -->
+  <div class="card hidden" id="step3">
+    <img src="cat.png" alt="Праздник" class="cat">
+    <h1>💖💖💖</h1>
+    <div class="final-text">Жди моего сообщения с подробной информацией ✨</div>
+  </div>
 
-<!-- Звуки -->
-<audio id="yepSound" src="yepiii.mp3" preload="auto"></audio>
-<audio id="happyKit" src="happycat.mp3" preload="auto"></audio>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
