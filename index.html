@@ -10,13 +10,25 @@
 </head>
 <body>
 
+<!-- Конверт -->
+<div class="envelope-container" id="envelopeContainer">
+  <div class="envelope">
+    <div class="envelope-flap"></div>
+    <div class="envelope-body">
+      <p class="letter-text">Привет! У меня есть для тебя маленькая валентинка 💌</p>
+    </div>
+  </div>
+  <input type="range" min="0" max="100" value="0" id="envelopeSlider">
+  <p class="slider-text">Потяни за ползунок, чтобы открыть письмо</p>
+</div>
+
 <!-- Первый экран -->
-<div class="card" id="step1">
+<div class="card hidden" id="step1">
   <img src="cat.png" class="cat" alt="Милый котик">
   <h1>Ева, будешь моей валентинкой? 💌</h1>
   <div class="buttons">
     <button id="yesBtn">Да 💖</button>
-    <button id="noBtn">Нет</button>
+    <button id="noBtn">Нет 😈</button>
   </div>
 </div>
 
@@ -27,7 +39,7 @@
   <p>Проведём 14 февраля вместе?<br>У меня есть план для нас 😏</p>
   <div class="buttons">
     <button id="yes2">Да 💖</button>
-    <button id="no2">Нет</button>
+    <button id="no2">Нет 😈</button>
   </div>
 </div>
 
