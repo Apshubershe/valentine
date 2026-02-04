@@ -29,12 +29,13 @@ function runAway(btn) {
   }
 
   // уменьшаем кнопку "Нет"
-  btn.style.transform = "scale("+(1 - 0.1*noClickCount)+")";
+  let scale = Math.max(0.5, 1 - 0.1*noClickCount); // минимальный размер 0.5
+  btn.style.transform = `scale(${scale})`;
 
-  // Случайная позиция на экране
+  // Ограничиваем движение, чтобы кнопка не вылетала за экран
   const padding = 10;
-  const maxX = window.innerWidth - btn.offsetWidth - padding;
-  const maxY = window.innerHeight - btn.offsetHeight - padding;
+  const maxX = window.innerWidth - btn.offsetWidth * scale - padding;
+  const maxY = window.innerHeight - btn.offsetHeight * scale - padding;
 
   const x = Math.random() * maxX;
   const y = Math.random() * maxY;
@@ -42,7 +43,6 @@ function runAway(btn) {
   btn.style.position = "fixed";
   btn.style.left = x + "px";
   btn.style.top = y + "px";
-  btn.style.transition = "all 0.5s ease"; // плавное движение
 }
 
 // Салют сердечек
