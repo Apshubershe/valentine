@@ -10,15 +10,17 @@
 </head>
 <body>
 
+<!-- Первый экран -->
 <div class="card" id="step1">
   <img src="cat.png" class="cat" alt="Милый котик">
-  <h1>Ева, будешь моей валентинкой? 💌💖📬</h1>
+  <h1>Ева, будешь моей валентинкой? 💌</h1>
   <div class="buttons">
     <button id="yesBtn">Да 💖</button>
     <button id="noBtn">Нет</button>
   </div>
 </div>
 
+<!-- Второй экран -->
 <div class="card hidden" id="step2">
   <video src="happycat.mp4" autoplay loop muted class="video"></video>
   <h1>Урааа! Ты будешь моей валентинкой 💕</h1>
@@ -29,14 +31,17 @@
   </div>
 </div>
 
+<!-- Финальный экран -->
 <div class="card hidden" id="step3">
   <h1>💖💖💖</h1>
   <p class="final-text">Жди моего сообщения<br>с подробной информацией ✨</p>
 </div>
 
+<!-- Звуки -->
 <audio id="sound" src="yepiii.mp3"></audio>
 <audio id="happyKit" src="happykit.mp3"></audio>
 
+<!-- Салют сердечек -->
 <div id="hearts-container"></div>
 
 <script src="script.js"></script>
