@@ -3,62 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Конверт с сюрпризом 💌</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* ВСТАВЬТЕ СЮДА исправленный CSS из предыдущего ответа */
-  </style>
+  <title>Письмо Еве 💌</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- АУДИО -->
-  <audio id="yepSound" preload="auto">
-    <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
-  </audio>
-  <audio id="happyKit" preload="auto">
-    <source src="https://www.soundjay.com/misc/sounds/applause-1.wav" type="audio/wav">
-  </audio>
 
-  <!-- 1. КОНВЕРТ -->
-  <div id="envelopeContainer">
-    <div id="envelope">
-      <div id="envelopeFlap"></div>
-      <div id="envelopeText">💌 Проверь меня!</div>
-    </div>
-    <input type="range" id="envelopeSlider" min="0" max="100" value="0">
-    <div id="sliderHint">Потяни ползунок ➡️</div>
+<!-- Конверт с ползунком -->
+<div id="envelopeContainer">
+  <div id="envelope">
+    <div id="envelopeFlap"></div>
+    <div id="envelopeText">Письмо Еве 💌</div>
   </div>
+  <input type="range" min="0" max="100" value="0" id="envelopeSlider">
+  <div id="sliderHint">Потяни ползунок, чтобы открыть письмо</div>
+</div>
 
-  <!-- 2. ПЕРВЫЙ ЭТАП -->
-  <div id="step1" class="card hidden active">
-    <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=400" alt="Котик" class="cat">
-    <h1>Будешь моей? 💕</h1>
-    <div class="buttons">
-      <button id="yesBtn" class="yes">Да! 😍</button>
-      <button id="noBtn" class="no">Нет</button>
-    </div>
+<!-- Первый экран с вопросом -->
+<div class="card hidden" id="step1">
+  <img src="cat.png" alt="Милый котик" class="cat">
+  <h1>Ева, будешь моей валентинкой? 💌</h1>
+  <div class="buttons">
+    <button id="yesBtn">Да 💖</button>
+    <button id="noBtn">Нет 😈</button>
   </div>
+</div>
 
-  <!-- 3. ВТОРОЙ ЭТАП -->
-  <div id="step2" class="card hidden">
-    <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=400" alt="Сердечко" class="video">
-    <h1>Серьезно? 🥺</h1>
-    <div class="buttons">
-      <button id="yes2" class="yes">Да-да-да! ❤️</button>
-      <button id="no2" class="no">Нет</button>
-    </div>
+<!-- Второй экран с видео -->
+<div class="card hidden" id="step2">
+  <video src="happycat.mp4" autoplay loop muted class="video" playsinline></video>
+  <h1>Урааа! Ты моя валентинка 💕</h1>
+  <p>Проведём 14 февраля вместе? У меня есть план для нас 😏</p>
+  <div class="buttons">
+    <button id="yes2">Да 💖</button>
+    <button id="no2">Нет 😈</button>
   </div>
+</div>
 
-  <!-- 4. ФИНАЛ -->
-  <div id="step3" class="card hidden">
-    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400" alt="Обнимашки" class="cat">
-    <h1>Урааа! 🎉</h1>
-    <div class="final-text">
-      Ты лучшая! Теперь мы вместе 💖
-    </div>
-  </div>
+<!-- Финальный экран -->
+<div class="card hidden" id="step3">
+  <h1>💖💖💖</h1>
+  <p class="final-text">Жди моего сообщения с подробной информацией ✨</p>
+</div>
 
-  <script>
-    /* ВСТАВЬТЕ СЮДА ваш JavaScript */
-  </script>
+<!-- Звуки -->
+<audio id="yepSound" src="yepiii.mp3" preload="auto"></audio>
+<audio id="happyKit" src="happycat.mp3" preload="auto"></audio>
+
+<script src="script.js"></script>
 </body>
 </html>
+вот HTML
