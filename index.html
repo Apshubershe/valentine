@@ -3,16 +3,21 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Валентинка 💖</title>
-
+<title>Письмо Еве 💌</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
-
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<!-- Первый экран -->
-<div class="card" id="step1">
+<!-- Конверт с ползунком -->
+<div id="envelope">
+  <div id="envelope-text">Письмо Еве 💌</div>
+  <input type="range" min="0" max="100" value="0" id="slider" />
+  <div id="slider-text">Потяни, чтобы открыть письмо</div>
+</div>
+
+<!-- Первый экран с вопросом, скрыт изначально -->
+<div class="card hidden" id="step1">
   <img src="cat.png" alt="Милый котик" class="cat" />
   <h1>Ева, будешь моей валентинкой? 💌</h1>
   <div class="buttons">
@@ -21,29 +26,7 @@
   </div>
 </div>
 
-<!-- Второй экран -->
-<div class="card hidden" id="step2">
-  <video src="happycat.mp4" autoplay loop muted class="video"></video>
-  <h1>Урааа! Ты будешь моей валентинкой 💕</h1>
-  <p>Проведём 14 февраля вместе?<br>У меня есть план для нас 😏</p>
-  <div class="buttons">
-    <button id="yes2">Да 💖</button>
-    <button id="no2">Нет 😈</button>
-  </div>
-</div>
-
-<!-- Финальный экран -->
-<div class="card hidden" id="step3">
-  <h1>💖💖💖</h1>
-  <p class="final-text">Жди моего сообщения<br />с подробной информацией ✨</p>
-</div>
-
-<!-- Звуки -->
 <audio id="sound" src="yepiii.mp3"></audio>
-<audio id="happyKit" src="happykit.mp3"></audio>
-
-<!-- Салют сердечек -->
-<div id="hearts-container"></div>
 
 <script src="script.js"></script>
 </body>
