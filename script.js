@@ -44,9 +44,9 @@ function placeNoButtonRandom(btn){
     noCounter++;
   }
 
-  // "Да" растёт с каждым "Нет"
-  let scale = 1 + noCounter * 0.05;
-  yesBtn.style.transform = `scale(${scale})`;
+  // "Нет" уменьшается
+  let scale = Math.max(1 - noCounter * 0.1, 0.4); // минимум 0.4
+  btn.style.transform = `scale(${scale})`;
 }
 
 // Кнопка "Нет" первого экрана
