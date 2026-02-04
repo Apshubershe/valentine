@@ -9,6 +9,7 @@
 </head>
 <body>
 
+<!-- Конверт -->
 <div id="envelopeContainer">
   <div id="envelope">
     <div id="envelopeFlap"></div>
@@ -18,32 +19,32 @@
   <div id="sliderHint">Потяни ползунок, чтобы открыть письмо</div>
 </div>
 
+<!-- Экран 1 -->
 <div class="card hidden" id="step1">
   <img src="cat.png" alt="Котик" class="cat">
   <h1>Ева, будешь моей валентинкой? 💌</h1>
   <div class="buttons">
-    <button id="yesBtn">Да 💖</button>
-    <button id="noBtn">Нет 😈</button>
+    <button id="yesBtn" class="yes">Да 💖</button>
+    <button id="noBtn" class="no">Нет 😈</button>
   </div>
 </div>
 
+<!-- Экран 2 -->
 <div class="card hidden" id="step2">
   <video src="happycat.mp4" autoplay loop muted class="video" playsinline></video>
   <h1>Урааа! Ты моя валентинка 💕</h1>
   <p>Проведём 14 февраля вместе? У меня есть план для нас 😏</p>
   <div class="buttons">
-    <button id="yes2">Да 💖</button>
-    <button id="no2">Нет 😈</button>
+    <button id="yes2" class="yes">Да 💖</button>
+    <button id="no2" class="no">Нет 😈</button>
   </div>
 </div>
 
+<!-- Финал -->
 <div class="card hidden" id="step3">
   <h1>💖💖💖</h1>
   <p class="final-text">Жди моего сообщения с подробной информацией ✨</p>
 </div>
-
-<audio id="sound1" src="yepiii.mp3" preload="auto"></audio>
-<audio id="sound2" src="happykit.mp3" preload="auto"></audio>
 
 <script src="script.js"></script>
 </body>
