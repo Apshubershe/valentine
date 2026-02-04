@@ -57,7 +57,8 @@ button:hover {
   background:#ff6f91; color:white;
 }
 #noBtn, #no2 {
-  background:#eee; position:relative;
+  background:#eee;
+  position:relative; /* стартовая позиция */
 }
 
 .buttons { display:flex; justify-content:space-between; align-items:center; margin-top:20px; position:relative; }
